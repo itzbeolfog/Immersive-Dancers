@@ -5,9 +5,16 @@
 <link rel="icon" href="dp.jpg">
 <style>
 :root{--bg:#02060f;--fg:#e8eefb;--mut:#8394b3;--p1:#1d4ed8;--p2:#2563eb;--p3:#60a5fa;--card:rgba(255,255,255,.035);--bd:rgba(148,163,184,.15);color-scheme:dark}
+/* opening video background */
+#bgvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;display:none}
+body:has(#main.on) #bgvid{display:block}
+body:has(#main.on) .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(3,13,36,.45),rgba(3,13,36,.7));z-index:1;pointer-events:none}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;min-height:100vh;overflow-x:hidden}
 .bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 55% at 50% -5%,#0c2a6e,transparent 70%),radial-gradient(ellipse 50% 40% at 90% 100%,#07204f,transparent 70%),linear-gradient(180deg,#040c20,#02060f);background-size:cover;background-position:center}
+.bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(3,13,36,.45),rgba(3,13,36,.7))}
+.bg.custom video{display:none}
 .beam{position:fixed;top:-10%;width:30vw;height:130vh;z-index:0;opacity:.09;filter:blur(55px);transform-origin:top center;animation:sweep 12s ease-in-out infinite alternate}
 .b1{left:10%;background:linear-gradient(var(--p1),transparent)}.b2{left:45%;background:linear-gradient(var(--p3),transparent);animation-delay:-4s}.b3{right:5%;background:linear-gradient(var(--p2),transparent);animation-delay:-8s}
 @keyframes sweep{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
@@ -74,7 +81,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:0 5vw 34px;line
 #mus.on{box-shadow:0 0 22px rgba(37,99,235,.55);border-color:rgba(96,165,250,.6)}#mus.on .m{display:none}#mus.on .w{display:block}
 </style></head>
 <body>
-<div class="bg" id="bg"></div><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div>
+<div class="bg" id="bg"><video id="bgvid" muted loop playsinline preload="none" disablepictureinpicture><source src="opening-vid.mp4" type="video/mp4"></video></div><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div>
 <div id="trans"><div id="curtain"></div></div>
 
 <section class="view on" id="intro">
@@ -148,11 +155,18 @@ const CONFIG={
 };
 /* ================================== */
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+/* opening video: plays only on the main layer (muted, looped) */
+(()=>{const v=$("#bgvid"),m=$("#main");if(!v||!m)return;v.muted=true;v.loop=true;
+const sync=()=>{if(m.classList.contains("on")){v.play().catch(()=>{})}else{v.pause()}};
+new MutationObserver(sync).observe(m,{attributes:true,attributeFilter:["class"]});
+["click","touchstart","keydown"].forEach(e=>addEventListener(e,sync,{passive:true}));
+const src=v.querySelector("source:last-of-type");if(src)src.addEventListener("error",()=>{v.style.display="none"});sync()})();
+
 $("#eq").innerHTML=Array.from({length:18},(_,i)=>`<i style="animation-delay:-${(i*.13).toFixed(2)}s"></i>`).join("");
 $$("[data-discord]").forEach(a=>a.href=CONFIG.DISCORD_URL);$$("[data-yt]").forEach(a=>a.href=CONFIG.YOUTUBE_URL);$("#dl").href=CONFIG.DOWNLOAD_URL;
 
 /* background layer */
-function setBg(u){if(u)$("#bg").style.backgroundImage=`linear-gradient(rgba(3,13,36,.4),rgba(3,13,36,.65)),url("${u}")`}
+function setBg(u){if(u)$("#bg").classList.add("custom");if(u)$("#bg").style.backgroundImage=`linear-gradient(rgba(3,13,36,.4),rgba(3,13,36,.65)),url("${u}")`}
 setBg(CONFIG.INTRO_BG);try{setBg(localStorage.getItem("bg"))}catch(e){}
 $("#bgfile").onchange=e=>{const f=e.target.files[0];if(!f||!f.type.startsWith("image"))return;const r=new FileReader();r.onload=()=>{setBg(r.result);try{localStorage.setItem("bg",r.result)}catch(e){}};r.readAsDataURL(f)};
 
