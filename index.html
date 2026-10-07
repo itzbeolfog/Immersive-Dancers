@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Immersive Dancers | Minecraft Mod</title>
+<title>Immersive Mods | Official Site</title>
 <link rel="icon" href="dp.jpg">
 <style>
 :root{--bg:#02060f;--fg:#e8eefb;--mut:#8394b3;--p1:#1d4ed8;--p2:#2563eb;--p3:#60a5fa;--card:rgba(255,255,255,.035);--bd:rgba(148,163,184,.15);color-scheme:dark}
@@ -77,7 +77,7 @@ ul.req{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}ul.req li{
 footer{text-align:center;color:var(--mut);font-size:13px;padding:0 5vw 34px;line-height:1.9}footer a{color:var(--p3)}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important}}
 #mus{position:fixed;left:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:90;height:42px;padding:0 15px 0 12px;gap:8px;font:inherit;font-size:12px;font-weight:600;border-radius:999px;border:1px solid var(--bd);background:rgba(8,16,38,.8);color:#fff;backdrop-filter:blur(10px);cursor:pointer;display:none;align-items:center;justify-content:center;transition:border-color .2s,box-shadow .2s}
-#main.on ~ #mus{display:flex}
+#main.on ~ #mus,#hub.on ~ #mus{display:flex}
 #mus span{white-space:nowrap}
 #mus:hover{border-color:rgba(96,165,250,.6)}#mus .m{display:block}#mus .w{display:none}
 #mus.on{box-shadow:0 0 22px rgba(37,99,235,.55);border-color:rgba(96,165,250,.6)}#mus.on .m{display:none}#mus.on .w{display:block}
@@ -89,23 +89,70 @@ h2{margin-top:60px;margin-bottom:10px}
 footer{background:rgba(38,42,52,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-top:1px solid var(--bd);padding-top:18px}
 .card{background:rgba(5,9,18,.85);border-color:rgba(148,163,184,.2)}
 .panel{background:rgba(5,9,18,.8)}
+
+/* hub */
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;max-width:760px;margin:0 auto}
+.mod{position:relative;display:flex;flex-direction:column;text-align:left;border-radius:20px;overflow:hidden;background:rgba(5,9,18,.88);border:1px solid rgba(148,163,184,.2);transition:transform .25s,border-color .25s,box-shadow .25s}
+.mod:hover{transform:translateY(-5px);border-color:rgba(96,165,250,.55);box-shadow:0 18px 50px rgba(37,99,235,.3)}
+.mod.click{cursor:pointer}
+.mod .art{aspect-ratio:1;overflow:hidden;background:#000}.mod .art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.mod:hover .art img{transform:scale(1.05)}
+.mod .body{padding:18px 20px 22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.mod h3{margin:0;font-size:22px}.mod p{margin:0;color:var(--mut);font-size:14px;line-height:1.55;flex:1}
+.mod .btn{text-align:center;margin-top:8px;padding:11px 20px;font-size:14px}
+.badge{position:absolute;top:12px;left:12px;z-index:2;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:rgba(2,6,15,.8);border:1px solid rgba(96,165,250,.5);color:var(--p3);backdrop-filter:blur(6px)}
+.badge.live{color:#6ee7a0;border-color:rgba(110,231,160,.5)}
+.wl.done{background:linear-gradient(180deg,#16a34a,#15803d);cursor:default}
+.wlc{font-size:12px;color:var(--mut);text-align:center}.wlc b{color:#fff}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:18px;text-align:left}
 </style></head>
 <body>
 <div class="bg" id="bg"><video id="bgvid" muted loop playsinline preload="none" disablepictureinpicture><source src="opening-vid.mp4" type="video/mp4"></video></div><div class="beam b1"></div><div class="beam b2"></div><div class="beam b3"></div>
 <div id="trans"><div id="curtain"></div></div>
 
 <section class="view on" id="intro">
-  <img class="dp" src="dp.jpg" alt="Immersive Dancers">
-  <div class="kicker">Minecraft Mod</div>
-  <h1>Immersive Dancers</h1>
-  <p class="tag">Dance animations for your Minecraft world.</p>
+  <div class="kicker">Minecraft Mods · by Beolf O.G</div>
+  <h1>Welcome to Immersive Mods Official Site</h1>
+  <p class="tag">Every new mod drops here first.</p>
   <div class="eq" id="eq"></div>
-  <button class="btn" id="enter">Enter the Dance Floor →</button>
+  <button class="btn" id="enter">Enter →</button>
+</section>
+
+<section class="view" id="hub">
+  <nav><b>Immersive Mods</b>
+    <div><a class="act">Home</a><a data-discord target="_blank" rel="noopener">Discord</a><a data-yt target="_blank" rel="noopener">YouTube</a></div></nav>
+  <div class="wrap">
+    <div class="hero fx" style="padding-bottom:30px">
+      <div class="kicker">About this site</div>
+      <h1 style="font-size:clamp(30px,6vw,54px)">All mods by Beolf O.G, in one place.</h1>
+      <p>Immersive Mods is the official home of every Minecraft mod made by YouTuber Beolf O.G. Each upcoming mod will be released here first, before anywhere else. You can browse every mod, learn what's coming, and add upcoming mods to your wishlist so you never miss a release.</p>
+      <div class="steps">
+        <div class="card"><div class="ic">01</div><h3>Released here first</h3><p>New mods land on this site before any other platform.</p></div>
+        <div class="card"><div class="ic">02</div><h3>Wishlist upcoming mods</h3><p>Tap Wishlist on any coming soon mod to show your support.</p></div>
+        <div class="card"><div class="ic">03</div><h3>Made by Beolf O.G</h3><p>Every mod here is built by the YouTuber Beolf O.G.</p></div>
+      </div>
+    </div>
+    <h2>Our Mods</h2><p class="sub">Pick a mod to explore.</p>
+    <div class="mods">
+      <div class="mod click fx" id="openDancers" tabindex="0" role="button" aria-label="Open Immersive Dancers">
+        <span class="badge live">Released</span>
+        <div class="art"><img src="dp.jpg" alt="Immersive Dancers"></div>
+        <div class="body"><h3>Immersive Dancers</h3><p>Custom music discs that make every mob in your world dance. 5 discs, 19 achievements and a village DJ.</p><span class="btn">Open Mod →</span></div>
+      </div>
+      <div class="mod fx">
+        <span class="badge">Coming Soon</span>
+        <div class="art"><img src="battles.jpg" alt="Immersive Battles"></div>
+        <div class="body"><h3>Immersive Battles</h3><p>A legendary battle mod fully focused on changing Minecraft fights forever. Wishlist it to be first in line when it releases here.</p>
+          <button class="btn wl" id="wl">♡ Add to Wishlist</button>
+          <div class="wlc"><b id="wlc">0</b> wishlists</div></div>
+      </div>
+    </div>
+  </div>
+  <footer>Made by Beolf O.G · <a data-yt target="_blank" rel="noopener">YouTube</a> · <a data-discord target="_blank" rel="noopener">Discord</a></footer>
 </section>
 
 <section class="view" id="main">
   <nav><b><img src="dp.jpg" alt="">Immersive Dancers</b>
-    <div><a data-go="home" class="act">Home</a><a data-go="gallery">Gallery</a><a data-discord target="_blank" rel="noopener">Request a Song</a><a data-go="download" class="cta">Download</a></div></nav>
+    <div><a data-hub>← All Mods</a><a data-go="home" class="act">Home</a><a data-go="gallery">Gallery</a><a data-discord target="_blank" rel="noopener">Request a Song</a><a data-go="download" class="cta">Download</a></div></nav>
   <div class="wrap">
     <div id="home">
       <div class="hero fx">
@@ -193,9 +240,26 @@ $("#enter").onclick=()=>{if(busy)return;busy=true;
   const T=$("#trans"),C=$("#curtain");$("#enter").classList.add("dance");startMusic();
   setTimeout(()=>{T.style.display="block";
     C.animate([{opacity:0},{opacity:1}],{duration:600,easing:"ease-in-out",fill:"forwards"}).onfinish=()=>{
-      $("#intro").classList.remove("on");$("#main").classList.add("on");window.scrollTo(0,0);
+      $("#intro").classList.remove("on");$("#hub").classList.add("on");window.scrollTo(0,0);
       C.animate([{transform:"translateY(0) scaleY(1)",filter:"blur(0px)"},{transform:"translateY(105%) scaleY(1.25)",filter:"blur(22px)"}],
         {duration:1000,easing:"cubic-bezier(.65,0,.35,1)",fill:"forwards"}).onfinish=()=>{T.style.display="none"}}},1100)};
+
+/* hub <-> mod navigation */
+function showView(id){["hub","main"].forEach(v=>$("#"+v).classList.toggle("on",v===id));if(id==="main")go("home");window.scrollTo(0,0)}
+$("#openDancers").onclick=()=>{SFX.nav();showView("main")};
+$("#openDancers").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();showView("main")}};
+$$("[data-hub]").forEach(a=>a.onclick=e=>{e.preventDefault();SFX.nav();showView("hub")});
+
+/* wishlist for Immersive Battles (global count via Abacus, one per browser) */
+const WK=encodeURIComponent("immersive-mods-beolfog")+"/battles-wishlist";
+async function wab(kind){for(const h of AB){try{const r=await fetch(`${h}/${kind}/${WK}`);if(r.status===404&&kind==="get")return 0;if(!r.ok)continue;const d=await r.json();if(typeof d.value==="number")return d.value}catch(e){}}throw 0}
+const wshow=n=>$("#wlc").textContent=Number(n).toLocaleString();
+function wdone(){const b=$("#wl");b.classList.add("done");b.textContent="✓ Wishlisted"}
+let wished=false;try{wished=localStorage.getItem("wl_battles")==="1"}catch(e){}
+if(wished)wdone();
+wab("get").then(wshow).catch(()=>{});
+$("#wl").onclick=()=>{if(wished)return;wished=true;wdone();SFX.chime();try{localStorage.setItem("wl_battles","1")}catch(e){}
+  wab("hit").then(wshow).catch(()=>{})};
 
 /* pages */
 function go(p){const pg=p==="gallery"?"home":p;
@@ -251,7 +315,7 @@ const SFX=(()=>{let ctx,master,lastHover=0;
 /* unlock audio on the first gesture */
 ["pointerdown","keydown","touchstart"].forEach(v=>document.addEventListener(v,SFX.init,{capture:true,passive:true}));
 /* hover ticks (mouse only) */
-const HOVER="a.btn,nav a,.card,.gal button,#mus,#lb button,#enter";
+const HOVER="a.btn,nav a,.card,.mod,.wl,.gal button,#mus,#lb button,#enter";
 document.addEventListener("pointerover",e=>{if(e.pointerType==="touch")return;const el=e.target.closest&&e.target.closest(HOVER);if(el&&!(e.relatedTarget&&el.contains(e.relatedTarget)))SFX.hover()});
 /* click sounds */
 document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("button,a");if(!t)return;SFX.init();
