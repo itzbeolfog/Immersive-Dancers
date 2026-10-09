@@ -251,9 +251,11 @@ $("#openDancers").onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefaul
 $$("[data-hub]").forEach(a=>a.onclick=e=>{e.preventDefault();SFX.nav();showView("hub")});
 
 /* wishlist for Immersive Battles (global count via Abacus, one per browser) */
+const AB=["https://abacus.jasoncameron.dev","https://abacus.jsn.cam"];
 const WK=encodeURIComponent("immersive-mods-beolfog")+"/battles-wishlist";
 async function wab(kind){for(const h of AB){try{const r=await fetch(`${h}/${kind}/${WK}`);if(r.status===404&&kind==="get")return 0;if(!r.ok)continue;const d=await r.json();if(typeof d.value==="number")return d.value}catch(e){}}throw 0}
-const wshow=n=>$("#wlc").textContent=Number(n).toLocaleString();
+const wshow=n=>{$("#wlc").textContent=Number(n).toLocaleString();try{localStorage.setItem("wl_count",String(n))}catch(e){}};
+try{const c=localStorage.getItem("wl_count");if(c!==null)$("#wlc").textContent=Number(c).toLocaleString()}catch(e){}
 function wdone(){const b=$("#wl");b.classList.add("done");b.textContent="✓ Wishlisted"}
 let wished=false;try{wished=localStorage.getItem("wl_battles")==="1"}catch(e){}
 if(wished)wdone();
@@ -279,7 +281,7 @@ lb.onclick=e=>{if(e.target===lb)lb.classList.remove("on")};
 document.addEventListener("keydown",e=>{if(!lb.classList.contains("on"))return;if(e.key==="Escape")lb.classList.remove("on");if(e.key==="ArrowLeft")open(cur-1);if(e.key==="ArrowRight")open(cur+1)});
 
 /* global download counter (Abacus, free counting API). Same number for everyone; one count per browser. */
-const AB=["https://abacus.jasoncameron.dev","https://abacus.jsn.cam"],KEY=encodeURIComponent(CONFIG.COUNTER_NAMESPACE)+"/downloads";
+const KEY=encodeURIComponent(CONFIG.COUNTER_NAMESPACE)+"/downloads";
 async function ab(kind){for(const h of AB){try{const r=await fetch(`${h}/${kind}/${KEY}`);if(r.status===404&&kind==="get")return 0;if(!r.ok)continue;const d=await r.json();if(typeof d.value==="number")return d.value}catch(e){}}throw 0}
 const show=n=>$("#count").textContent=Number(CONFIG.BASE_COUNT+n).toLocaleString();
 show(0);ab("get").then(show).catch(()=>{});
