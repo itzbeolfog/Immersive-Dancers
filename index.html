@@ -254,13 +254,19 @@ $$("[data-hub]").forEach(a=>a.onclick=e=>{e.preventDefault();SFX.nav();showView(
 const AB=["https://abacus.jasoncameron.dev","https://abacus.jsn.cam"];
 const WK=encodeURIComponent("immersive-mods-beolfog")+"/battles-wishlist";
 async function wab(kind){for(const h of AB){try{const r=await fetch(`${h}/${kind}/${WK}`);if(r.status===404&&kind==="get")return 0;if(!r.ok)continue;const d=await r.json();if(typeof d.value==="number")return d.value}catch(e){}}throw 0}
-const wshow=n=>{$("#wlc").textContent=Number(n).toLocaleString();try{localStorage.setItem("wl_count",String(n))}catch(e){}};
+/* count never goes backwards: if the API resets/expires, keep showing the highest value seen */
+const wshow=n=>{n=Number(n);let hi=0;try{hi=Number(localStorage.getItem("wl_count"))||0}catch(e){}
+  if(n<hi)n=hi;$("#wlc").textContent=n.toLocaleString();try{localStorage.setItem("wl_count",String(n))}catch(e){}};
 try{const c=localStorage.getItem("wl_count");if(c!==null)$("#wlc").textContent=Number(c).toLocaleString()}catch(e){}
+/* wishlisted flag: stored in BOTH localStorage and a 1-year cookie so clearing one doesn't reset it */
+const wckGet=()=>/(?:^|; )wl_battles=1/.test(document.cookie);
+const wckSet=()=>{try{document.cookie="wl_battles=1; max-age=31536000; path=/; SameSite=Lax"}catch(e){}};
 function wdone(){const b=$("#wl");b.classList.add("done");b.textContent="✓ Wishlisted"}
 let wished=false;try{wished=localStorage.getItem("wl_battles")==="1"}catch(e){}
-if(wished)wdone();
+if(!wished&&wckGet()){wished=true;try{localStorage.setItem("wl_battles","1")}catch(e){}}
+if(wished){wckSet();wdone()}
 wab("get").then(wshow).catch(()=>{});
-$("#wl").onclick=()=>{if(wished)return;wished=true;wdone();SFX.chime();try{localStorage.setItem("wl_battles","1")}catch(e){}
+$("#wl").onclick=()=>{if(wished)return;wished=true;wdone();SFX.chime();wckSet();try{localStorage.setItem("wl_battles","1")}catch(e){}
   wab("hit").then(wshow).catch(()=>{})};
 
 /* pages */
